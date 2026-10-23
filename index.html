@@ -1,0 +1,131 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BonPlan Express | Les bons plans pour tous</title>
+<meta name="description" content="Découvrez des idées shopping, des sélections de produits et des bons plans pour tous les budgets.">
+<style>
+:root{--orange:#ff8a00;--yellow:#ffd23f;--dark:#151515;--muted:#777}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f6f6f6;color:#222}
+header{background:#151515;color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-size:25px;font-weight:900;color:white}
+.logo span{color:var(--orange)}
+nav a{color:white;text-decoration:none;margin:0 8px;font-size:14px}
+.hero{background:linear-gradient(120deg,#171717,#303030);color:white;padding:55px 7%;text-align:center}
+.hero h1{font-size:clamp(30px,5vw,52px);margin:0 0 15px}
+.hero h1 span{color:var(--yellow)}
+.hero p{color:#ddd;line-height:1.7}
+.search{display:block;width:min(520px,100%);padding:15px;border:0;border-radius:8px;margin:25px auto 0;font-size:16px}
+.categories{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:22px 12px;background:white}
+.categories button{border:1px solid #ddd;border-radius:25px;padding:11px 16px;background:white;cursor:pointer}
+.categories button.active,.categories button:hover{background:var(--orange);color:white;border-color:var(--orange)}
+main{max-width:1200px;margin:auto;padding:30px 18px}
+.section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.section-title h2{font-size:25px}
+.section-title span{color:#777;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:white;border-radius:13px;overflow:hidden;box-shadow:0 3px 15px #0000000d}
+.card img{width:100%;height:190px;object-fit:cover;background:#eee}
+.card-content{padding:16px}
+.tag{display:inline-block;background:#fff0dc;color:#a65300;padding:6px 9px;border-radius:5px;font-size:12px}
+.card h3{margin:12px 0 8px;font-size:18px}
+.card p{font-size:14px;color:#666;line-height:1.5;min-height:42px}
+.offer{display:block;text-align:center;text-decoration:none;background:var(--orange);color:#fff;font-weight:bold;padding:12px;border-radius:7px}
+.offer:hover{background:#e87800}
+.notice{background:#fff4dc;border-left:4px solid var(--orange);padding:15px;margin:25px 0;line-height:1.6;font-size:14px}
+footer{background:#171717;color:#ddd;padding:30px 6%;text-align:center;line-height:1.8}
+footer a{color:var(--yellow)}
+@media(max-width:600px){header{justify-content:center;text-align:center}.hero{padding:40px 18px}nav{line-height:2}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">BonPlan <span>Express</span> 🛒</div>
+  <nav>
+    <a href="#accueil">Accueil</a>
+    <a href="#produits">Produits</a>
+    <a href="#apropos">À propos</a>
+  </nav>
+</header>
+
+<section class="hero" id="accueil">
+  <h1>Les bons plans <span>pour tous !</span></h1>
+  <p>Explorez nos sélections de produits pour la maison, la mode, la technologie et bien plus encore.</p>
+  <input class="search" id="search" type="search" placeholder="🔎 Rechercher un produit..." aria-label="Rechercher un produit">
+</section>
+
+<div class="categories" id="categories">
+  <button class="active" data-cat="Tous">🌟 Tout voir</button>
+  <button data-cat="Électronique">📱 Électronique</button>
+  <button data-cat="Mode">👟 Mode</button>
+  <button data-cat="Maison">🏠 Maison</button>
+  <button data-cat="Beauté">✨ Beauté</button>
+  <button data-cat="Jeux vidéo">🎮 Jeux vidéo</button>
+  <button data-cat="Sport">⚽ Sport</button>
+</div>
+
+<main id="produits">
+  <div class="section-title">
+    <h2>🔥 Nos sélections</h2>
+    <span>Découvrez nos idées shopping</span>
+  </div>
+  <div class="grid" id="grid"></div>
+  <p id="empty" hidden>Aucun produit trouvé. Essayez un autre mot.</p>
+  <div class="notice">
+    <strong>Information :</strong> les produits présentés ici sont des exemples de catégories. Les liens vers les offres seront ajoutés après leur vérification.
+  </div>
+</main>
+
+<section id="apropos" style="text-align:center;padding:25px 20px">
+  <h2>Pourquoi BonPlan Express ?</h2>
+  <p>Notre objectif : vous aider à découvrir des produits utiles et à comparer les possibilités avant de choisir.</p>
+</section>
+
+<footer>
+  <div class="logo">BonPlan <span>Express</span></div>
+  <p>Les bons plans pour tous !</p>
+  <p>Certains liens pourront être affiliés. Si vous achetez par leur intermédiaire, nous pouvons recevoir une commission, sans coût supplémentaire pour vous.</p>
+  <p>© <span id="year"></span> BonPlan Express</p>
+</footer>
+
+<script>
+const products=[
+ {name:"Écouteurs sans fil",cat:"Électronique",desc:"Pour écouter votre musique au quotidien.",emoji:"🎧",img:"photo-1505740420928-5e560c06d30e"},
+ {name:"Accessoires technologiques",cat:"Électronique",desc:"Des idées pratiques pour vos appareils.",emoji:"⌚",img:"photo-1523275335684-37898b6baf30"},
+ {name:"Baskets tendance",cat:"Mode",desc:"Des idées de chaussures pour tous les jours.",emoji:"👟",img:"photo-1542291026-7eec264c27ff"},
+ {name:"Sac et accessoires",cat:"Mode",desc:"Complétez votre style avec des accessoires.",emoji:"👜",img:"photo-1548036328-c9fa89d128fa"},
+ {name:"Décoration intérieure",cat:"Maison",desc:"Des idées pour rendre votre intérieur accueillant.",emoji:"🏠",img:"photo-1616486338812-3dadae4b4ace"},
+ {name:"Cuisine pratique",cat:"Maison",desc:"Des accessoires utiles pour cuisiner.",emoji:"🍳",img:"photo-1556911220-e15b29be8c8f"},
+ {name:"Soins et beauté",cat:"Beauté",desc:"Découvrez des idées pour votre routine beauté.",emoji:"✨",img:"photo-1596462502278-27bfdc403348"},
+ {name:"Jeux et accessoires",cat:"Jeux vidéo",desc:"Des idées pour améliorer vos sessions de jeu.",emoji:"🎮",img:"photo-1593305841991-05c297ba4575"},
+ {name:"Équipement sportif",cat:"Sport",desc:"Des accessoires pour rester actif.",emoji:"⚽",img:"photo-1517836357463-d25dfeac3438"}
+];
+let category="Tous";
+const grid=document.getElementById("grid");
+function render(){
+ const term=document.getElementById("search").value.toLowerCase();
+ const shown=products.filter(p=>(category==="Tous"||p.cat===category)&&(p.name+" "+p.cat+" "+p.desc).toLowerCase().includes(term));
+ grid.innerHTML=shown.map(p=>`
+ <article class="card">
+ <img loading="lazy" src="https://images.unsplash.com/${p.img}?auto=format&fit=crop&w=600&q=80" alt="${p.name}">
+ <div class="card-content">
+ <span class="tag">${p.emoji} ${p.cat}</span>
+ <h3>${p.name}</h3><p>${p.desc}</p>
+ <a class="offer" href="#apropos">Offre bientôt disponible</a>
+ </div></article>`).join("");
+ document.getElementById("empty").hidden=shown.length>0;
+}
+document.querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>{
+ category=b.dataset.cat;
+ document.querySelectorAll("[data-cat]").forEach(x=>x.classList.toggle("active",x===b));
+ render();
+}));
+document.getElementById("search").addEventListener("input",render);
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
+</script>
+</body>
+</html>
