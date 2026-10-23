@@ -3,18 +3,18 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>BonPlan Express | Les bons plans pour tous</title>
-<meta name="description" content="Découvrez des idées shopping, des sélections de produits et des bons plans pour tous les budgets.">
+<meta name="description" content="Découvrez nos sélections shopping et nos bons plans.">
 <style>
-:root{--orange:#ff8a00;--yellow:#ffd23f;--dark:#151515;--muted:#777}
+:root{--orange:#ff8a00;--yellow:#ffd23f;--dark:#151515}
 *{box-sizing:border-box}
 body{margin:0;font-family:Arial,sans-serif;background:#f6f6f6;color:#222}
-header{background:#151515;color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+header{background:var(--dark);color:white;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
 .logo{font-size:25px;font-weight:900;color:white}
 .logo span{color:var(--orange)}
 nav a{color:white;text-decoration:none;margin:0 8px;font-size:14px}
-.hero{background:linear-gradient(120deg,#171717,#303030);color:white;padding:55px 7%;text-align:center}
+.hero{background:linear-gradient(120deg,#171717,#303030);color:white;padding:50px 7%;text-align:center}
 .hero h1{font-size:clamp(30px,5vw,52px);margin:0 0 15px}
 .hero h1 span{color:var(--yellow)}
 .hero p{color:#ddd;line-height:1.7}
@@ -24,31 +24,32 @@ nav a{color:white;text-decoration:none;margin:0 8px;font-size:14px}
 .categories button.active,.categories button:hover{background:var(--orange);color:white;border-color:var(--orange)}
 main{max-width:1200px;margin:auto;padding:30px 18px}
 .section-title{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.section-title h2{font-size:25px}
-.section-title span{color:#777;font-size:14px}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
 .card{background:white;border-radius:13px;overflow:hidden;box-shadow:0 3px 15px #0000000d}
-.card img{width:100%;height:190px;object-fit:cover;background:#eee}
+.gallery{position:relative;background:white}
+.gallery img{display:block;width:100%;height:230px;object-fit:contain;background:white}
+.gallery button{position:absolute;top:50%;transform:translateY(-50%);border:0;border-radius:50%;width:38px;height:38px;background:#ffffffdf;color:#222;font-size:25px;cursor:pointer}
+.gallery .prev{left:8px}.gallery .next{right:8px}
+.gallery .count{position:absolute;bottom:8px;right:8px;background:#151515bb;color:white;padding:5px 9px;border-radius:12px;font-size:12px}
+.thumbs{display:flex;gap:7px;overflow-x:auto;padding:8px;justify-content:center}
+.thumbs button{padding:0;border:2px solid transparent;background:white;cursor:pointer;border-radius:5px;flex:0 0 48px}
+.thumbs button.active{border-color:var(--orange)}
+.thumbs img{width:44px;height:44px;object-fit:contain}
 .card-content{padding:16px}
 .tag{display:inline-block;background:#fff0dc;color:#a65300;padding:6px 9px;border-radius:5px;font-size:12px}
 .card h3{margin:12px 0 8px;font-size:18px}
 .card p{font-size:14px;color:#666;line-height:1.5;min-height:42px}
-.offer{display:block;text-align:center;text-decoration:none;background:var(--orange);color:#fff;font-weight:bold;padding:12px;border-radius:7px}
+.offer{display:block;text-align:center;text-decoration:none;background:var(--orange);color:white;font-weight:bold;padding:12px;border-radius:7px}
 .offer:hover{background:#e87800}
 .notice{background:#fff4dc;border-left:4px solid var(--orange);padding:15px;margin:25px 0;line-height:1.6;font-size:14px}
 footer{background:#171717;color:#ddd;padding:30px 6%;text-align:center;line-height:1.8}
-footer a{color:var(--yellow)}
 @media(max-width:600px){header{justify-content:center;text-align:center}.hero{padding:40px 18px}nav{line-height:2}}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">BonPlan <span>Express</span> 🛒</div>
-  <nav>
-    <a href="#accueil">Accueil</a>
-    <a href="#produits">Produits</a>
-    <a href="#apropos">À propos</a>
-  </nav>
+  <nav><a href="#accueil">Accueil</a><a href="#produits">Produits</a><a href="#apropos">À propos</a></nav>
 </header>
 
 <section class="hero" id="accueil">
@@ -68,67 +69,114 @@ footer a{color:var(--yellow)}
 </div>
 
 <main id="produits">
-  <div class="section-title">
-    <h2>🔥 Nos sélections</h2>
-    <span>Découvrez nos idées shopping</span>
-  </div>
+  <div class="section-title"><h2>🔥 Nos sélections</h2><span>Découvrez nos idées shopping</span></div>
   <div class="grid" id="grid"></div>
   <p id="empty" hidden>Aucun produit trouvé. Essayez un autre mot.</p>
-  <div class="notice">
-    <strong>Information :</strong> les produits présentés ici sont des exemples de catégories. Les liens vers les offres seront ajoutés après leur vérification.
-  </div>
+  <div class="notice"><strong>Information :</strong> certains produits sont des suggestions. Les offres d'achat sont proposées uniquement lorsqu'un lien est disponible.</div>
 </main>
 
 <section id="apropos" style="text-align:center;padding:25px 20px">
   <h2>Pourquoi BonPlan Express ?</h2>
-  <p>Notre objectif : vous aider à découvrir des produits utiles et à comparer les possibilités avant de choisir.</p>
+  <p>Notre objectif : vous aider à découvrir des produits utiles avant de choisir.</p>
 </section>
 
 <footer>
   <div class="logo">BonPlan <span>Express</span></div>
   <p>Les bons plans pour tous !</p>
-  <p>Certains liens pourront être affiliés. Si vous achetez par leur intermédiaire, nous pouvons recevoir une commission, sans coût supplémentaire pour vous.</p>
+  <p>En tant que Partenaire Amazon, je peux percevoir une commission sur les achats éligibles.</p>
   <p>© <span id="year"></span> BonPlan Express</p>
 </footer>
 
 <script>
-const products=[
-{name: "Xiaomi Smart Band 10", cat: "Électronique",desc: "Bracelet connecté noir avec suivi du sommeil, de la santé et des activités sportives.",  emoji: "⌚",img: "https://m.media-amazon.com/images/I/51bkPDf8dUL._AC_SL1000_.jpg",images: ["https://m.media-amazon.com/images/I/51bkPDf8dUL._AC_SL1000_.jpg"],link: "https://link.amazon/B0emkbeRx"},
- {name:"Accessoires technologiques",cat:"Électronique",desc:"Des idées pratiques pour vos appareils.",emoji:"⌚",img:"photo-1523275335684-37898b6baf30"},
- {name:"Baskets tendance",cat:"Mode",desc:"Des idées de chaussures pour tous les jours.",emoji:"👟",img:"photo-1542291026-7eec264c27ff"},
- {name:"Sac et accessoires",cat:"Mode",desc:"Complétez votre style avec des accessoires.",emoji:"👜",img:"photo-1548036328-c9fa89d128fa"},
- {name:"Décoration intérieure",cat:"Maison",desc:"Des idées pour rendre votre intérieur accueillant.",emoji:"🏠",img:"photo-1616486338812-3dadae4b4ace"},
- {name:"Cuisine pratique",cat:"Maison",desc:"Des accessoires utiles pour cuisiner.",emoji:"🍳",img:"photo-1556911220-e15b29be8c8f"},
- {name:"Soins et beauté",cat:"Beauté",desc:"Découvrez des idées pour votre routine beauté.",emoji:"✨",img:"photo-1596462502278-27bfdc403348"},
- {name:"Jeux et accessoires",cat:"Jeux vidéo",desc:"Des idées pour améliorer vos sessions de jeu.",emoji:"🎮",img:"photo-1593305841991-05c297ba4575"},
- {name:"Équipement sportif",cat:"Sport",desc:"Des accessoires pour rester actif.",emoji:"⚽",img:"photo-1517836357463-d25dfeac3438"}
+const products = [
+  {
+    name:"Xiaomi Smart Band 10",
+    cat:"Électronique",
+    desc:"Bracelet connecté noir : découvrez les caractéristiques et les fonctions sur la fiche du produit.",
+    emoji:"⌚",
+    images:[
+      "https://m.media-amazon.com/images/I/51bkPDf8dUL._AC_SL1000_.jpg",
+      "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1544117519-31a4b719223d?auto=format&fit=crop&w=700&q=80"
+    ],
+    link:"https://link.amazon/B0emkbeRx"
+  },
+  {name:"Accessoires technologiques",cat:"Électronique",desc:"Des idées pratiques pour vos appareils.",emoji:"⌚",images:["https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80"]},
+  {name:"Baskets tendance",cat:"Mode",desc:"Des idées de chaussures pour tous les jours.",emoji:"👟",images:["https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80"]},
+  {name:"Sac et accessoires",cat:"Mode",desc:"Complétez votre style avec des accessoires.",emoji:"👜",images:["https://images.unsplash.com/photo-1548036328-c9fa89d128fa?auto=format&fit=crop&w=700&q=80"]},
+  {name:"Décoration intérieure",cat:"Maison",desc:"Des idées pour rendre votre intérieur accueillant.",emoji:"🏠",images:["https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=700&q=80"]},
+  {name:"Cuisine pratique",cat:"Maison",desc:"Des accessoires utiles pour cuisiner.",emoji:"🍳",images:["https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=700&q=80"]},
+  {name:"Soins et beauté",cat:"Beauté",desc:"Découvrez des idées pour votre routine beauté.",emoji:"✨",images:["https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=700&q=80"]},
+  {name:"Jeux et accessoires",cat:"Jeux vidéo",desc:"Des idées pour améliorer vos sessions de jeu.",emoji:"🎮",images:["https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=700&q=80"]},
+  {name:"Équipement sportif",cat:"Sport",desc:"Des accessoires pour rester actif.",emoji:"⚽",images:["https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=700&q=80"]}
 ];
 
-let category="Tous";
-const grid=document.getElementById("grid");
+let category = "Tous";
+const grid = document.getElementById("grid");
+
 function render(){
- const term=document.getElementById("search").value.toLowerCase();
- const shown=products.filter(p=>(category==="Tous"||p.cat===category)&&(p.name+" "+p.cat+" "+p.desc).toLowerCase().includes(term));
- grid.innerHTML=shown.map(p=>`
- <article class="card">
- <img loading="lazy" src="https://images.unsplash.com/${p.img}?auto=format&fit=crop&w=600&q=80" alt="${p.name}">
- <div class="card-content">
- <span class="tag">${p.emoji} ${p.cat}</span>
- <h3>${p.name}</h3><p>${p.desc}</p>
-<a class="offer" href="${p.link || '#apropos'}"
-   target="_blank" rel="nofollow sponsored noopener">
-  ${p.link ? 'Voir sur Amazon' : 'Offre bientôt disponible'}
-</a>
- </div></article>`).join("");
- document.getElementById("empty").hidden=shown.length>0;
+  const term = document.getElementById("search").value.toLowerCase();
+  const shown = products.filter(p =>
+    (category === "Tous" || p.cat === category) &&
+    (p.name + " " + p.cat + " " + p.desc).toLowerCase().includes(term)
+  );
+
+  grid.innerHTML = shown.map((p,index) => `
+    <article class="card">
+      <div class="gallery" data-index="${index}">
+        <img class="product-photo" src="${p.images[0]}" alt="${p.name}" loading="lazy">
+        ${p.images.length > 1 ? `
+          <button class="prev" type="button" aria-label="Photo précédente">‹</button>
+          <button class="next" type="button" aria-label="Photo suivante">›</button>
+          <span class="count">1 / ${p.images.length}</span>
+        ` : ""}
+      </div>
+      ${p.images.length > 1 ? `<div class="thumbs">${p.images.map((url,i)=>`
+        <button type="button" class="${i===0?'active':''}" data-photo="${i}" aria-label="Afficher la photo ${i+1}">
+          <img src="${url}" alt="">
+        </button>`).join("")}</div>` : ""}
+      <div class="card-content">
+        <span class="tag">${p.emoji} ${p.cat}</span>
+        <h3>${p.name}</h3>
+        <p>${p.desc}</p>
+        <a class="offer" href="${p.link || '#apropos'}"
+           ${p.link ? 'target="_blank" rel="nofollow sponsored noopener"' : ''}>
+          ${p.link ? "Voir sur Amazon" : "Offre bientôt disponible"}
+        </a>
+      </div>
+    </article>
+  `).join("");
+
+  document.getElementById("empty").hidden = shown.length > 0;
+
+  grid.querySelectorAll(".gallery").forEach(gallery => {
+    const p = shown[Number(gallery.dataset.index)];
+    let current = 0;
+    const img = gallery.querySelector(".product-photo");
+    const count = gallery.querySelector(".count");
+    const thumbs = gallery.parentElement.querySelectorAll(".thumbs button");
+
+    function showPhoto(i){
+      current = (i + p.images.length) % p.images.length;
+      img.src = p.images[current];
+      if(count) count.textContent = `${current+1} / ${p.images.length}`;
+      thumbs.forEach((b,j)=>b.classList.toggle("active",j===current));
+    }
+
+    gallery.querySelector(".prev")?.addEventListener("click",()=>showPhoto(current-1));
+    gallery.querySelector(".next")?.addEventListener("click",()=>showPhoto(current+1));
+    thumbs.forEach((b,j)=>b.addEventListener("click",()=>showPhoto(j)));
+  });
 }
+
 document.querySelectorAll("[data-cat]").forEach(b=>b.addEventListener("click",()=>{
- category=b.dataset.cat;
- document.querySelectorAll("[data-cat]").forEach(x=>x.classList.toggle("active",x===b));
- render();
+  category = b.dataset.cat;
+  document.querySelectorAll("[data-cat]").forEach(x=>x.classList.toggle("active",x===b));
+  render();
 }));
 document.getElementById("search").addEventListener("input",render);
-document.getElementById("year").textContent=new Date().getFullYear();
+document.getElementById("year").textContent = new Date().getFullYear();
 render();
 </script>
 </body>
