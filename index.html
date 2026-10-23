@@ -93,7 +93,7 @@ footer a{color:var(--yellow)}
 
 <script>
 const products=[
- {name:"Écouteurs sans fil",cat:"Électronique",desc:"Pour écouter votre musique au quotidien.",emoji:"🎧",img:"photo-1505740420928-5e560c06d30e"},
+ {name:"Montre connectée",cat:"Électronique",desc:"Découvrez cette montre connectée sur Amazon.",emoji:"⌚",img:"photo-1523275335684-37898b6baf30",link:"https://link.amazon/B0g7rVDd7"},
  {name:"Accessoires technologiques",cat:"Électronique",desc:"Des idées pratiques pour vos appareils.",emoji:"⌚",img:"photo-1523275335684-37898b6baf30"},
  {name:"Baskets tendance",cat:"Mode",desc:"Des idées de chaussures pour tous les jours.",emoji:"👟",img:"photo-1542291026-7eec264c27ff"},
  {name:"Sac et accessoires",cat:"Mode",desc:"Complétez votre style avec des accessoires.",emoji:"👜",img:"photo-1548036328-c9fa89d128fa"},
@@ -103,6 +103,7 @@ const products=[
  {name:"Jeux et accessoires",cat:"Jeux vidéo",desc:"Des idées pour améliorer vos sessions de jeu.",emoji:"🎮",img:"photo-1593305841991-05c297ba4575"},
  {name:"Équipement sportif",cat:"Sport",desc:"Des accessoires pour rester actif.",emoji:"⚽",img:"photo-1517836357463-d25dfeac3438"}
 ];
+
 let category="Tous";
 const grid=document.getElementById("grid");
 function render(){
@@ -114,7 +115,10 @@ function render(){
  <div class="card-content">
  <span class="tag">${p.emoji} ${p.cat}</span>
  <h3>${p.name}</h3><p>${p.desc}</p>
- <a class="offer" href="#apropos">Offre bientôt disponible</a>
+<a class="offer" href="${p.link || '#apropos'}"
+   target="_blank" rel="nofollow sponsored noopener">
+  ${p.link ? 'Voir sur Amazon' : 'Offre bientôt disponible'}
+</a>
  </div></article>`).join("");
  document.getElementById("empty").hidden=shown.length>0;
 }
