@@ -321,11 +321,18 @@
 
       <section id="produits">
         <div class="section-heading">
-          <div><h2>Nos idées de produits</h2><p>Filtrez les suggestions ou cherchez un article.</p></div>
+          <div><h2>Autres produits par catégorie</h2><p>Parcourez les idées générales et recherchez un article.</p></div>
           <div class="search-wrap"><input id="searchInput" type="search" placeholder="Rechercher un produit..." aria-label="Rechercher un produit"></div>
         </div>
-        <div id="categoryFilters" class="categories" aria-label="Filtrer par catégorie"></div>
-        <div id="productGrid" class="product-grid"></div>
+        <div class="featured-products">
+          <div class="section-heading"><div><h2>⭐ Mes produits sélectionnés</h2><p>Les produits ajoutés individuellement sont regroupés ici.</p></div></div>
+          <div id="featuredProductGrid" class="product-grid"></div>
+        </div>
+        <div class="other-products">
+          <div class="section-heading"><div><h2>Explorer les autres idées</h2><p>Des suggestions générales classées par catégorie.</p></div></div>
+          <div id="categoryFilters" class="categories" aria-label="Filtrer par catégorie"></div>
+          <div id="productGrid" class="product-grid"></div>
+        </div>
         <p id="emptyState" class="empty-state" hidden>Aucun produit ne correspond à votre recherche.</p>
       </section>
 
@@ -371,6 +378,7 @@
     const products = [
       {
         name: "Xiaomi Smart Band 10",
+        featured: true,
         category: "Électronique",
         description: "Un bracelet connecté pour suivre l’activité et consulter les notifications.",
         image: "https://m.media-amazon.com/images/I/51bkPDf8dUL._AC_SL1000_.jpg",
@@ -378,6 +386,7 @@
       },
       {
         name: "Sac à dos KONO noir avec cadenas à code",
+        featured: true,
         category: "Mode",
         description: "Un sac à dos sobre pour les déplacements, les études ou le travail. Vérifiez les dimensions et les compartiments sur Amazon.",
         image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=900&q=80",
@@ -385,6 +394,7 @@
       },
       {
         name: "JBL Go 5 — enceinte Bluetooth ultra-portable bleue",
+        featured: true,
         category: "Électronique",
         description: "Une enceinte Bluetooth compacte. Consultez la fiche Amazon pour vérifier l’étanchéité, l’autonomie et les caractéristiques du modèle.",
         image: "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?auto=format&fit=crop&w=900&q=80",
@@ -392,6 +402,7 @@
       },
       {
         name: "Soundcore by Anker P31i — écouteurs Bluetooth sans fil",
+        featured: true,
         category: "Électronique",
         description: "Des écouteurs sans fil annoncés avec réduction de bruit adaptative. Vérifiez les caractéristiques exactes sur la fiche du vendeur.",
         image: "https://cdn.shopify.com/s/files/1/0611/6956/5874/files/D1202Z11_01_3840x.jpg?v=1762918792",
@@ -399,6 +410,7 @@
       },
       {
         name: "Pack de 2 chargeurs USB-C rapides avec câbles de 2 m",
+        featured: true,
         category: "Électronique",
         description: "Un lot de deux chargeurs USB-C avec câbles de 2 mètres, annoncé pour iPhone 15, 16 et 17. Vérifiez la compatibilité et la puissance sur Amazon.",
         image: "https://m.media-amazon.com/images/I/61EabR5jUCL._AC_SL1500_.jpg",
@@ -649,32 +661,41 @@
         return matchesCategory && haystack.includes(query);
       });
 
+      const featuredGrid = document.getElementById("featuredProductGrid");
       const grid = document.getElementById("productGrid");
       const emptyState = document.getElementById("emptyState");
+      const featured = filtered.filter(product => product.featured);
+      const other = filtered.filter(product => !product.featured);
       emptyState.hidden = filtered.length !== 0;
 
-      grid.innerHTML = filtered.map(product => `
-        <article class="product-card">
-          <div class="product-image">
-            ${product.image
-              ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" loading="lazy"
-                   onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
-                 <div class="image-placeholder" hidden>Image indisponible</div>`
-              : `<div class="image-placeholder"><div style="font-size:2rem">🛍️</div><strong>${escapeHTML(product.category)}</strong><br>Voir les produits sur Amazon</div>`
-            }
-          </div>
-          <div class="product-info">
-            <span class="tag">${escapeHTML(product.category)}</span>
-            <h3>${escapeHTML(product.name)}</h3>
-            <p>${escapeHTML(product.description)}</p>
-            <a class="product-link" href="${escapeHTML(productLink(product))}"
-               target="_blank" rel="nofollow sponsored noopener noreferrer">
-              Voir les produits sur Amazon →
-            </a>
-            <p class="purchase-note">L’achat et le paiement se font directement sur Amazon. Le prix et la disponibilité peuvent changer.</p>
-          </div>
-        </article>
-      `).join("");
+      function productCards(items) {
+        return items.map(product => `
+          <article class="product-card">
+            <div class="product-image">
+              ${product.image
+                ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" loading="lazy"
+                     onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
+                   <div class="image-placeholder" hidden>Image indisponible</div>`
+                : `<div class="image-placeholder"><div style="font-size:2rem">🛍️</div><strong>${escapeHTML(product.category)}</strong><br>Voir les produits sur Amazon</div>`
+              }
+            </div>
+            <div class="product-info">
+              <span class="tag">${escapeHTML(product.category)}</span>
+              <h3>${escapeHTML(product.name)}</h3>
+              <p>${escapeHTML(product.description)}</p>
+              <a class="product-link" href="${escapeHTML(productLink(product))}"
+                 target="_blank" rel="nofollow sponsored noopener noreferrer">
+                Voir les produits sur Amazon →
+              </a>
+              <p class="purchase-note">L’achat et le paiement se font directement sur Amazon. Le prix et la disponibilité peuvent changer.</p>
+            </div>
+          </article>
+        `).join("");
+      }
+      featuredGrid.innerHTML = productCards(featured);
+      grid.innerHTML = productCards(other);
+      document.querySelector(".featured-products").hidden = featured.length === 0;
+      document.querySelector(".other-products").hidden = other.length === 0;
     }
 
     document.getElementById("searchInput").addEventListener("input", renderProducts);
