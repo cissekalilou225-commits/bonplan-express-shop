@@ -170,6 +170,8 @@
       border-radius: 16px; padding: 24px;
     }
     .about p { color: var(--muted); margin-bottom: 0; }
+    .deals-panel { border-color: rgba(255,159,28,.34); background: linear-gradient(135deg, rgba(255,159,28,.12), rgba(17,24,39,.96) 58%, rgba(94,234,212,.07)); }
+    .deals-panel .purchase-note { max-width: 760px; }
     footer { border-top: 1px solid var(--border); margin-top: 26px; padding: 25px 0 35px; color: var(--muted); font-size: .88rem; }
     footer p { margin: 6px 0; }
     footer a { color: #ffc27a; }
@@ -285,6 +287,7 @@
     <div class="container nav">
       <a class="brand" href="#" aria-label="BonPlan Express accueil">BonPlan <span>Express</span></a>
       <nav aria-label="Navigation principale">
+        <a href="#bons-plans">Bons plans</a>
         <a href="#categories">Catégories</a>
         <a href="#produits">Produits</a>
         <a href="#apropos">À propos</a>
@@ -301,6 +304,7 @@
         <div class="hero-actions">
           <a class="button" href="#produits">Découvrir les produits</a>
           <a class="button secondary" href="#categories">Explorer les catégories</a>
+          <a class="button secondary" href="#bons-plans">🔥 Voir les promos Amazon</a>
           <button class="button secondary" id="shareSiteButton" type="button">Partager le site ↗</button>
         </div>
         <p id="shareFeedback" class="share-feedback" role="status" aria-live="polite"></p>
@@ -311,6 +315,18 @@
         <div class="benefit"><strong>🛒 Achat sur Amazon</strong><p>Le vendeur gère la commande, le paiement et la livraison.</p></div>
         <div class="benefit"><strong>🔗 Liens vers les produits</strong><p>Les boutons ouvrent Amazon dans un nouvel onglet.</p></div>
       </div>
+
+      <section id="bons-plans" aria-labelledby="dealsTitle">
+        <div class="about deals-panel">
+          <span class="eyebrow">🔥 Promotions Amazon</span>
+          <h2 id="dealsTitle" style="margin-top:14px">Les bons plans du moment</h2>
+          <p>Consultez la page des offres Amazon pour découvrir les promotions disponibles. Les réductions, prix et stocks peuvent changer à tout moment et sont confirmés sur Amazon.</p>
+          <div style="margin-top:20px">
+            <a class="button" href="https://www.amazon.fr/gp/goldbox?tag=bonplanexp0c0-21" target="_blank" rel="nofollow sponsored noopener noreferrer">Voir les promotions sur Amazon →</a>
+          </div>
+          <p class="purchase-note" style="margin-top:16px">BonPlan Express est un site indépendant. En tant que Partenaire Amazon, je peux percevoir une commission sur les achats éligibles, sans frais supplémentaires pour vous.</p>
+        </div>
+      </section>
 
       <section id="categories">
         <div class="section-heading">
