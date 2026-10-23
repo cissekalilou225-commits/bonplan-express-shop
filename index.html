@@ -1,487 +1,154 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="BonPlan Express : découvre des produits utiles et des bons plans sélectionnés pour toi.">
-  <title>BonPlan Express | Les bons plans au quotidien</title>
-
+  <meta name="description" content="BonPlan Express : découvrez des idées de produits et trouvez-les facilement sur Amazon.">
+  <title>BonPlan Express — Trouvez vos bons plans</title>
   <style>
     :root {
       --bg: #101114;
-      --panel: #1a1b20;
-      --panel-light: #22242b;
+      --panel: #191b21;
+      --panel-2: #22242b;
+      --text: #f7f7f8;
+      --muted: #b8bbc5;
       --orange: #ff8a00;
-      --orange-light: #ffad42;
-      --text: #f5f5f5;
-      --muted: #b6b6bf;
-      --border: #30313a;
+      --orange-hover: #ffa52f;
+      --border: #30323a;
     }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
-      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
       background: var(--bg);
       color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
       line-height: 1.6;
     }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button, input {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .container {
-      width: min(1150px, 92%);
-      margin: auto;
-    }
-
+    a { color: inherit; }
+    .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
     header {
-      background: #17181d;
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(16,17,20,.94);
       border-bottom: 1px solid var(--border);
-      position: sticky;
-      top: 0;
-      z-index: 20;
+      backdrop-filter: blur(10px);
     }
-
-    .navbar {
-      min-height: 76px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      flex-wrap: wrap;
-      padding: 14px 0;
+    .nav {
+      min-height: 72px; display: flex; align-items: center;
+      justify-content: space-between; gap: 18px; flex-wrap: wrap;
+      padding: 12px 0;
     }
-
-    .logo {
-      font-size: 25px;
-      font-weight: 900;
-      letter-spacing: -1px;
-    }
-
-    .logo span {
-      color: var(--orange);
-    }
-
-    nav {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    nav a {
-      color: #ddd;
-      font-size: 14px;
-    }
-
-    nav a:hover {
-      color: var(--orange);
-    }
-
-    .hero {
-      padding: 65px 0;
-      background:
-        radial-gradient(ellipse at top right, #482908 0%, transparent 48%),
-        linear-gradient(135deg, #191a20, #101114);
-    }
-
-    .hero-content {
-      max-width: 750px;
-    }
-
+    .brand { text-decoration: none; font-size: 1.25rem; font-weight: 800; }
+    .brand span { color: var(--orange); }
+    nav { display: flex; gap: 18px; flex-wrap: wrap; }
+    nav a { color: var(--muted); text-decoration: none; font-size: .94rem; }
+    nav a:hover { color: var(--orange); }
+    .hero { padding: 68px 0 48px; text-align: center; }
     .eyebrow {
-      color: var(--orange-light);
-      font-size: 13px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 12px;
+      display: inline-block; border: 1px solid #6b431b; color: #ffc27a;
+      background: #2a1c0e; padding: 5px 12px; border-radius: 999px;
+      font-size: .82rem; font-weight: 700;
     }
-
-    h1 {
-      font-size: clamp(36px, 6vw, 58px);
-      line-height: 1.1;
-      margin-bottom: 18px;
+    h1 { font-size: clamp(2.1rem, 5vw, 3.7rem); line-height: 1.12; margin: 18px auto; max-width: 850px; }
+    h1 span { color: var(--orange); }
+    .hero p { color: var(--muted); max-width: 670px; margin: 0 auto 24px; }
+    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center;
+      border-radius: 10px; padding: 12px 18px; font-weight: 800;
+      text-decoration: none; border: 1px solid var(--orange);
+      background: var(--orange); color: #17120b; cursor: pointer;
     }
-
-    h1 span {
-      color: var(--orange);
+    .button:hover { background: var(--orange-hover); }
+    .button.secondary { background: transparent; color: var(--text); border-color: var(--border); }
+    .benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; padding-bottom: 42px; }
+    .benefit { background: var(--panel); border: 1px solid var(--border); border-radius: 14px; padding: 18px; }
+    .benefit strong { display: block; margin-bottom: 5px; }
+    .benefit p { margin: 0; color: var(--muted); font-size: .92rem; }
+    section { padding: 28px 0 42px; }
+    .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 18px; flex-wrap: wrap; margin-bottom: 20px; }
+    h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem); }
+    .section-heading p { color: var(--muted); margin: 5px 0 0; }
+    .search-wrap { width: min(360px, 100%); }
+    input[type="search"] {
+      width: 100%; padding: 12px 14px; border-radius: 10px;
+      border: 1px solid var(--border); background: var(--panel);
+      color: var(--text); font-size: 1rem; outline: none;
     }
-
-    .hero p {
-      color: var(--muted);
-      max-width: 620px;
-      margin-bottom: 25px;
+    input[type="search"]:focus { border-color: var(--orange); }
+    .categories { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 24px; }
+    .category-button {
+      border: 1px solid var(--border); background: var(--panel);
+      color: var(--text); padding: 9px 14px; border-radius: 999px;
+      cursor: pointer; font-weight: 700;
     }
-
-    .main-button {
-      display: inline-block;
-      background: var(--orange);
-      color: #171717;
-      padding: 12px 21px;
-      border-radius: 9px;
-      font-weight: bold;
-      border: 0;
+    .category-button:hover, .category-button.active {
+      background: var(--orange); color: #17120b; border-color: var(--orange);
     }
-
-    .main-button:hover {
-      background: var(--orange-light);
+    .category-shortcuts {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 0 0 28px;
     }
-
-    .benefits {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-      padding: 25px 0;
+    .category-card {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      background: var(--panel); border: 1px solid var(--border); border-radius: 12px;
+      padding: 15px; text-decoration: none;
     }
-
-    .benefit {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-    }
-
-    .benefit strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .benefit p {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    section.products-section {
-      padding: 42px 0 65px;
-    }
-
-    .section-heading {
-      margin-bottom: 24px;
-    }
-
-    .section-heading h2 {
-      font-size: 30px;
-      margin-bottom: 5px;
-    }
-
-    .section-heading p {
-      color: var(--muted);
-    }
-
-    .search-box {
-      display: flex;
-      gap: 10px;
-      margin: 22px 0;
-    }
-
-    .search-box input {
-      width: 100%;
-      min-width: 0;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      padding: 13px 15px;
-      color: white;
-      outline: none;
-    }
-
-    .search-box input:focus {
-      border-color: var(--orange);
-    }
-
-    .filters {
-      display: flex;
-      gap: 9px;
-      flex-wrap: wrap;
-      margin-bottom: 25px;
-    }
-
-    .filter-button {
-      border: 1px solid var(--border);
-      background: var(--panel);
-      color: #ddd;
-      padding: 9px 14px;
-      border-radius: 30px;
-      font-size: 13px;
-    }
-
-    .filter-button:hover,
-    .filter-button.active {
-      background: var(--orange);
-      border-color: var(--orange);
-      color: #151515;
-      font-weight: bold;
-    }
-
-    .product-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 20px;
-    }
-
+    .category-card:hover { border-color: var(--orange); transform: translateY(-1px); }
+    .category-card small { display: block; color: var(--muted); }
+    .category-card .arrow { color: var(--orange); font-size: 1.2rem; }
+    .product-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
     .product-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 15px;
-      overflow: hidden;
-      transition: transform .2s, border-color .2s;
-      min-width: 0;
+      overflow: hidden; background: var(--panel); border: 1px solid var(--border);
+      border-radius: 16px; display: flex; flex-direction: column;
     }
-
-    .product-card:hover {
-      transform: translateY(-4px);
-      border-color: #6c4822;
-    }
-
-    .product-media {
-      position: relative;
-      background: #fff;
-      color: #222;
-      overflow: hidden;
-    }
-
     .product-image {
-      display: block;
-      width: 100%;
-      height: 245px;
-      object-fit: contain;
-      padding: 15px;
-      background: #fff;
+      min-height: 205px; aspect-ratio: 1.4 / 1; display: flex;
+      align-items: center; justify-content: center; background: #fff; overflow: hidden;
     }
-
-    .product-tag {
-      position: absolute;
-      top: 12px;
-      left: 12px;
-      background: var(--orange);
-      color: #171717;
-      padding: 5px 9px;
-      border-radius: 5px;
-      font-size: 11px;
-      font-weight: bold;
-      z-index: 2;
-    }
-
-    .gallery-controls {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 8px;
-      pointer-events: none;
-    }
-
-    .gallery-button {
-      pointer-events: auto;
-      border: 0;
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-      background: rgba(20, 20, 20, .78);
-      color: white;
-      font-size: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .gallery-button:hover {
-      background: var(--orange);
-      color: #111;
-    }
-
-    .gallery-counter {
-      position: absolute;
-      right: 10px;
-      bottom: 10px;
-      background: rgba(0, 0, 0, .75);
-      color: white;
-      padding: 4px 8px;
-      border-radius: 20px;
-      font-size: 11px;
-    }
-
-    .thumbnails {
-      display: flex;
-      gap: 7px;
-      padding: 10px;
-      background: #f3f3f3;
-      overflow-x: auto;
-    }
-
-    .thumbnail {
-      width: 51px;
-      height: 48px;
-      flex: 0 0 51px;
-      border: 2px solid transparent;
-      border-radius: 6px;
-      padding: 2px;
-      background: white;
-      overflow: hidden;
-    }
-
-    .thumbnail.active {
-      border-color: var(--orange);
-    }
-
-    .thumbnail img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .product-info {
-      padding: 18px;
-    }
-
-    .product-category {
-      color: var(--orange-light);
-      text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 1px;
-      font-weight: bold;
-    }
-
-    .product-info h3 {
-      font-size: 19px;
-      margin: 5px 0 9px;
-    }
-
-    .product-info p {
-      color: var(--muted);
-      font-size: 13px;
-      min-height: 62px;
-      margin-bottom: 16px;
-    }
-
+    .product-image img { width: 100%; height: 100%; max-height: 260px; object-fit: contain; }
+    .image-placeholder { color: #5c5c5c; text-align: center; padding: 20px; }
+    .product-info { padding: 17px; display: flex; flex-direction: column; flex: 1; }
+    .tag { color: #ffc27a; font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; }
+    .product-info h3 { margin: 7px 0; font-size: 1.15rem; line-height: 1.35; }
+    .product-info p { color: var(--muted); margin: 0 0 15px; font-size: .94rem; }
     .product-link {
-      display: block;
-      width: 100%;
-      text-align: center;
-      background: var(--orange);
-      color: #171717;
-      border-radius: 8px;
-      padding: 11px 12px;
-      font-weight: bold;
-      font-size: 14px;
+      display: block; text-align: center; text-decoration: none; margin-top: auto;
+      background: var(--orange); color: #17120b; font-weight: 800;
+      border-radius: 9px; padding: 11px 12px;
     }
-
-    .product-link:hover {
-      background: var(--orange-light);
+    .product-link:hover { background: var(--orange-hover); }
+    .purchase-note {
+      margin: 10px 0 0; padding: 9px; border-radius: 8px;
+      background: var(--panel-2); color: #c8c8d0; font-size: .76rem; line-height: 1.45;
     }
-
-    .no-results {
-      grid-column: 1 / -1;
-      padding: 35px 15px;
-      border: 1px dashed var(--border);
-      border-radius: 12px;
-      text-align: center;
-      color: var(--muted);
-    }
-
+    .empty-state { color: var(--muted); padding: 24px 0; }
     .about {
-      padding: 45px 0;
-      background: #17181d;
-      border-top: 1px solid var(--border);
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px;
     }
-
-    .about h2 {
-      font-size: 26px;
-      margin-bottom: 12px;
+    .about p { color: var(--muted); margin-bottom: 0; }
+    footer { border-top: 1px solid var(--border); margin-top: 26px; padding: 25px 0 35px; color: var(--muted); font-size: .88rem; }
+    footer p { margin: 6px 0; }
+    footer a { color: #ffc27a; }
+    @media (max-width: 800px) {
+      .benefits, .category-shortcuts { grid-template-columns: 1fr; }
+      .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .nav { justify-content: center; }
     }
-
-    .about p {
-      color: var(--muted);
-      max-width: 800px;
-      font-size: 14px;
-      margin-bottom: 10px;
-    }
-
-    footer {
-      padding: 25px 0;
-      border-top: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    .footer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    footer a {
-      color: var(--orange-light);
-    }
-
-    @media (max-width: 850px) {
-      .product-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .benefits {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .navbar {
-        justify-content: center;
-      }
-
-      nav {
-        justify-content: center;
-      }
-
-      .hero {
-        padding: 45px 0;
-      }
-
-      .product-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .product-image {
-        height: 270px;
-      }
-
-      .search-box {
-        flex-direction: column;
-      }
+    @media (max-width: 540px) {
+      nav { justify-content: center; gap: 12px; }
+      .hero { padding-top: 45px; }
+      .product-grid { grid-template-columns: 1fr; }
+      .product-image { min-height: 190px; }
     }
   </style>
 </head>
-
 <body>
   <header>
-    <div class="container navbar">
-      <a class="logo" href="#accueil">BonPlan <span>Express</span></a>
-
+    <div class="container nav">
+      <a class="brand" href="#" aria-label="BonPlan Express accueil">BonPlan <span>Express</span></a>
       <nav aria-label="Navigation principale">
-        <a href="#accueil">Accueil</a>
+        <a href="#categories">Catégories</a>
         <a href="#produits">Produits</a>
         <a href="#apropos">À propos</a>
       </nav>
@@ -489,366 +156,222 @@
   </header>
 
   <main>
-    <section class="hero" id="accueil">
-      <div class="container hero-content">
-        <div class="eyebrow">Les bons plans du quotidien</div>
-        <h1>Les bonnes trouvailles, <span>au bon endroit.</span></h1>
-        <p>
-          Découvre une sélection de produits pratiques pour la technologie,
-          la maison, le sport et les loisirs. Compare les articles et consulte
-          les offres chez nos partenaires.
-        </p>
-        <a class="main-button" href="#produits">Découvrir les produits →</a>
-      </div>
-    </section>
+    <div class="container">
+      <section class="hero">
+        <span class="eyebrow">✨ Des idées pour mieux choisir</span>
+        <h1>Les bons produits, <span>en quelques clics.</span></h1>
+        <p>Découvrez des idées dans les catégories populaires et retrouvez les produits directement sur Amazon France.</p>
+        <div class="hero-actions">
+          <a class="button" href="#produits">Découvrir les produits</a>
+          <a class="button secondary" href="#categories">Explorer les catégories</a>
+        </div>
+      </section>
 
-    <div class="container benefits">
-      <div class="benefit">
-        <strong>🔎 Une sélection pratique</strong>
-        <p>Des produits à découvrir dans plusieurs catégories.</p>
+      <div class="benefits" aria-label="Nos avantages">
+        <div class="benefit"><strong>🔎 Des idées faciles à trouver</strong><p>Explorez les catégories et recherchez un produit sur le site.</p></div>
+        <div class="benefit"><strong>🛒 Achat sur Amazon</strong><p>Le vendeur gère la commande, le paiement et la livraison.</p></div>
+        <div class="benefit"><strong>🔗 Liens vers les produits</strong><p>Les boutons ouvrent Amazon dans un nouvel onglet.</p></div>
       </div>
-      <div class="benefit">
-        <strong>🛍️ Accès aux boutiques</strong>
-        <p>Consulte les détails du produit chez le vendeur.</p>
-      </div>
-      <div class="benefit">
-        <strong>⚡ Simple et rapide</strong>
-        <p>Recherche un produit et retrouve facilement sa fiche.</p>
-      </div>
-    </div>
 
-    <section class="products-section" id="produits">
-      <div class="container">
+      <section id="categories">
         <div class="section-heading">
-          <div class="eyebrow">Notre sélection</div>
-          <h2>Les produits à découvrir</h2>
-          <p>Choisis une catégorie ou recherche un article.</p>
+          <div><h2>Explorer les catégories</h2><p>Cliquez sur une catégorie pour rechercher les produits correspondants sur Amazon.</p></div>
         </div>
+        <div id="categoryShortcuts" class="category-shortcuts"></div>
+      </section>
 
-        <div class="search-box">
-          <input
-            type="search"
-            id="searchInput"
-            placeholder="Rechercher un produit..."
-            aria-label="Rechercher un produit"
-          >
+      <section id="produits">
+        <div class="section-heading">
+          <div><h2>Nos idées de produits</h2><p>Filtrez les suggestions ou cherchez un article.</p></div>
+          <div class="search-wrap"><input id="searchInput" type="search" placeholder="Rechercher un produit..." aria-label="Rechercher un produit"></div>
         </div>
+        <div id="categoryFilters" class="categories" aria-label="Filtrer par catégorie"></div>
+        <div id="productGrid" class="product-grid"></div>
+        <p id="emptyState" class="empty-state" hidden>Aucun produit ne correspond à votre recherche.</p>
+      </section>
 
-        <div class="filters" id="filters"></div>
-        <div class="product-grid" id="productGrid"></div>
-      </div>
-    </section>
-
-    <section class="about" id="apropos">
-      <div class="container">
-        <h2>À propos de BonPlan Express</h2>
-        <p>
-          BonPlan Express t'aide à découvrir des produits dans différentes
-          catégories et à consulter les pages des vendeurs.
-        </p>
-        <p>
-          <strong>Transparence :</strong> En tant que Partenaire Amazon,
-          je peux percevoir une commission sur les achats éligibles, sans
-          frais supplémentaires pour toi. Les prix et la disponibilité peuvent
-          changer sur le site du vendeur.
-        </p>
-      </div>
-    </section>
+      <section id="apropos">
+        <div class="about">
+          <h2>À propos de BonPlan Express</h2>
+          <p>BonPlan Express partage des idées de produits pour vous aider à explorer différentes catégories. Nous ne vendons pas directement les articles : lorsque vous cliquez sur un lien, vous êtes redirigé vers Amazon pour consulter les informations disponibles et effectuer votre achat.</p>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer>
-    <div class="container footer-content">
-      <div>© <span id="year"></span> BonPlan Express</div>
-      <div>En tant que Partenaire Amazon, je peux percevoir une commission sur les achats éligibles.</div>
+    <div class="container">
+      <p><strong>BonPlan Express</strong> — Site indépendant de recommandation.</p>
+      <p>En tant que Partenaire Amazon, je peux percevoir une commission sur les achats éligibles.</p>
+      <p>Les prix, stocks, conditions et délais de livraison sont indiqués par Amazon et peuvent changer.</p>
     </div>
   </footer>
 
   <script>
-    /*
-      IMPORTANT :
-      Les images du bracelet sont regroupées dans "images".
-      Le premier visuel est la photo fournie précédemment.
-      Les autres proviennent de la page produit officielle Xiaomi.
-    */
+    // Vérifiez que cet identifiant correspond bien à votre compte Amazon Partenaires.
+    const AMAZON_TAG = "bonplanexp0c0-21";
+
+    const categories = [
+      { name: "Électronique", icon: "🔌", search: "produits électroniques" },
+      { name: "Mode", icon: "👕", search: "vêtements et accessoires" },
+      { name: "Maison", icon: "🏠", search: "décoration maison" },
+      { name: "Beauté", icon: "✨", search: "produits beauté" },
+      { name: "Jeux vidéo", icon: "🎮", search: "accessoires gaming" },
+      { name: "Sport", icon: "🏃", search: "équipements sportifs" }
+    ];
+
+    // Les liens de catégorie sont générés automatiquement.
+    // Cela évite de saisir manuellement une URL par catégorie.
+    function amazonCategoryLink(categoryName) {
+      const category = categories.find(item => item.name === categoryName);
+      const searchTerm = category ? category.search : categoryName;
+      return "https://www.amazon.fr/s?k=" + encodeURIComponent(searchTerm)
+        + "&tag=" + encodeURIComponent(AMAZON_TAG);
+    }
 
     const products = [
       {
-        id: "xiaomi-smart-band-10",
         name: "Xiaomi Smart Band 10",
-        cat: "Électronique",
-        desc: "Bracelet connecté noir. Découvre ses fonctions sportives, son suivi d'activité et son écran AMOLED.",
-        tag: "À découvrir",
-        images: [
-          "https://m.media-amazon.com/images/I/51bkPDf8dUL._AC_SL1000_.jpg",
-          "https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-smart-band-10/pc/55d6eb1838010d538354754715e6255c.jpg",
-          "https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-smart-band-10/pc/c03ae7cb928256742366dbca65d8afc1.jpg",
-          "https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-smart-band-10/pc/16713e564f086b8ac061d28dbba51665.jpg",
-          "https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-smart-band-10/pc/24513d1cc4d61074cc073635c28d6002.jpg",
-          "https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-smart-band-10/pc/d922583f1f016fe2b194db61dcf71df2.jpg",
-          "https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-smart-band-10/pc/4fd177e715659a73e877d716dd71dff8.jpg",
-          "https://i02.appmifile.com/mi-com-product/fly-birds/xiaomi-smart-band-10/pc/3984837abf0a10a246576c213da83c80.jpg"
-        ],
+        category: "Électronique",
+        description: "Un bracelet connecté pour suivre l’activité et consulter les notifications.",
+        image: "https://m.media-amazon.com/images/I/51bkPDf8dUL._AC_SL1000_.jpg",
         link: "https://link.amazon/B0emkbeRx"
       },
-
       {
-        id: "ecouteurs",
         name: "Écouteurs sans fil",
-        cat: "Électronique",
-        desc: "Explore les écouteurs sans fil et compare les modèles selon tes besoins.",
-        tag: "Audio",
-        img: "photo-1505740420928-5e560c06d30e",
-        link: "https://www.amazon.fr/"
+        category: "Électronique",
+        description: "Explorez les écouteurs Bluetooth et comparez les caractéristiques.",
+        image: "",
+        search: "écouteurs sans fil Bluetooth"
       },
-
       {
-        id: "accessoires",
-        name: "Accessoires high-tech",
-        cat: "Électronique",
-        desc: "Découvre des accessoires utiles pour tes appareils électroniques.",
-        tag: "Tech",
-        img: "photo-1519389950473-47ba0277781c",
-        link: "https://www.amazon.fr/"
-      },
-
-      {
-        id: "mode",
         name: "Accessoires de mode",
-        cat: "Mode",
-        desc: "Des idées d'accessoires pour compléter ton style au quotidien.",
-        tag: "Style",
-        img: "photo-1490481651871-ab68de25d43d",
-        link: "https://www.amazon.fr/"
+        category: "Mode",
+        description: "Découvrez des sacs, montres, vêtements et accessoires.",
+        image: "",
+        search: "accessoires mode"
       },
-
       {
-        id: "maison",
         name: "Décoration maison",
-        cat: "Maison",
-        desc: "Des idées pour rendre ton intérieur plus agréable et pratique.",
-        tag: "Maison",
-        img: "photo-1600210492486-724fe5c67fb0",
-        link: "https://www.amazon.fr/"
+        category: "Maison",
+        description: "Des idées pour décorer et organiser votre intérieur.",
+        image: "",
+        search: "décoration maison"
       },
-
       {
-        id: "beaute",
-        name: "Accessoires beauté",
-        cat: "Beauté",
-        desc: "Découvre des accessoires de beauté et de soin pour tous les jours.",
-        tag: "Beauté",
-        img: "photo-1596462502278-27bfdc403348",
-        link: "https://www.amazon.fr/"
+        name: "Produits de beauté",
+        category: "Beauté",
+        description: "Parcourez les soins et accessoires de beauté.",
+        image: "",
+        search: "produits beauté"
       },
-
       {
-        id: "gaming",
         name: "Accessoires gaming",
-        cat: "Jeux vidéo",
-        desc: "Des idées d'accessoires pour améliorer ton espace de jeu.",
-        tag: "Gaming",
-        img: "photo-1593305841991-05c297ba4575",
-        link: "https://www.amazon.fr/"
+        category: "Jeux vidéo",
+        description: "Claviers, souris, casques et autres accessoires de jeu.",
+        image: "",
+        search: "accessoires gaming"
       },
-
       {
-        id: "sport",
         name: "Équipement sportif",
-        cat: "Sport",
-        desc: "Découvre des accessoires pour accompagner tes activités sportives.",
-        tag: "Sport",
-        img: "photo-1517836357463-d25dfeac3438",
-        link: "https://www.amazon.fr/"
+        category: "Sport",
+        description: "Découvrez des accessoires pour vos activités sportives.",
+        image: "",
+        search: "équipements sportifs"
       }
     ];
 
-    const categories = [
-      "Tout",
-      "Électronique",
-      "Mode",
-      "Maison",
-      "Beauté",
-      "Jeux vidéo",
-      "Sport"
-    ];
+    let selectedCategory = "Tout";
 
-    let activeCategory = "Tout";
-    const galleryIndexes = {};
+    function escapeHTML(value) {
+      return String(value).replace(/[&<>"']/g, char => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[char]));
+    }
 
-    const productGrid = document.getElementById("productGrid");
-    const filtersContainer = document.getElementById("filters");
-    const searchInput = document.getElementById("searchInput");
+    function productLink(product) {
+      // Le produit Xiaomi garde le lien fourni. Les autres cartes ouvrent
+      // une recherche Amazon avec l'identifiant Partenaires du site.
+      if (product.link) return product.link;
+      const searchTerm = product.search || product.name;
+      return "https://www.amazon.fr/s?k=" + encodeURIComponent(searchTerm)
+        + "&tag=" + encodeURIComponent(AMAZON_TAG);
+    }
 
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    function getImageUrl(product, index = 0) {
-      if (product.images && product.images.length) {
-        return product.images[index % product.images.length];
-      }
-
-      if (product.img && product.img.startsWith("http")) {
-        return product.img;
-      }
-
-      return "https://images.unsplash.com/" + product.img +
-        "?auto=format&fit=crop&w=900&q=80";
+    function renderCategoryShortcuts() {
+      const container = document.getElementById("categoryShortcuts");
+      container.innerHTML = categories.map(category => `
+        <a class="category-card" href="${amazonCategoryLink(category.name)}"
+           target="_blank" rel="nofollow sponsored noopener noreferrer">
+          <span>${category.icon} <strong>${escapeHTML(category.name)}</strong>
+            <small>Voir les produits sur Amazon</small>
+          </span>
+          <span class="arrow" aria-hidden="true">→</span>
+        </a>
+      `).join("");
     }
 
     function renderFilters() {
-      filtersContainer.innerHTML = categories.map(category => `
-        <button
-          type="button"
-          class="filter-button ${category === activeCategory ? "active" : ""}"
-          data-category="${category}"
-        >${category}</button>
+      const container = document.getElementById("categoryFilters");
+      const all = [{ name: "Tout", icon: "✨" }, ...categories];
+      container.innerHTML = all.map(category => `
+        <button class="category-button ${selectedCategory === category.name ? "active" : ""}"
+          type="button" data-category="${escapeHTML(category.name)}">
+          ${category.icon} ${escapeHTML(category.name)}
+        </button>
       `).join("");
 
-      filtersContainer.querySelectorAll("button").forEach(button => {
+      container.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", () => {
-          activeCategory = button.dataset.category;
+          selectedCategory = button.dataset.category;
           renderFilters();
           renderProducts();
+          if (selectedCategory !== "Tout") {
+            // Le filtre reste sur le site. Le lien Amazon de la catégorie
+            // est disponible dans les cartes de catégories ci-dessus.
+          }
         });
       });
     }
 
     function renderProducts() {
-      const searchTerm = searchInput.value.trim().toLocaleLowerCase("fr");
-
-      const filteredProducts = products.filter(product => {
-        const matchesCategory =
-          activeCategory === "Tout" || product.cat === activeCategory;
-
-        const searchableText =
-          (product.name + " " + product.cat + " " + product.desc)
-          .toLocaleLowerCase("fr");
-
-        return matchesCategory && searchableText.includes(searchTerm);
+      const query = document.getElementById("searchInput").value.trim().toLocaleLowerCase("fr");
+      const filtered = products.filter(product => {
+        const matchesCategory = selectedCategory === "Tout" || product.category === selectedCategory;
+        const haystack = (product.name + " " + product.category + " " + product.description).toLocaleLowerCase("fr");
+        return matchesCategory && haystack.includes(query);
       });
 
-      if (filteredProducts.length === 0) {
-        productGrid.innerHTML = `
-          <div class="no-results">
-            Aucun produit trouvé. Essaie une autre recherche.
+      const grid = document.getElementById("productGrid");
+      const emptyState = document.getElementById("emptyState");
+      emptyState.hidden = filtered.length !== 0;
+
+      grid.innerHTML = filtered.map(product => `
+        <article class="product-card">
+          <div class="product-image">
+            ${product.image
+              ? `<img src="${escapeHTML(product.image)}" alt="${escapeHTML(product.name)}" loading="lazy"
+                   onerror="this.style.display='none'; this.nextElementSibling.hidden=false;">
+                 <div class="image-placeholder" hidden>Image indisponible</div>`
+              : `<div class="image-placeholder"><div style="font-size:2rem">🛍️</div><strong>${escapeHTML(product.category)}</strong><br>Voir les produits sur Amazon</div>`
+            }
           </div>
-        `;
-        return;
-      }
-
-      productGrid.innerHTML = filteredProducts.map(product => {
-        const images = product.images || [getImageUrl(product)];
-        const index = galleryIndexes[product.id] || 0;
-        const imageUrl = getImageUrl(product, index);
-        const hasGallery = images.length > 1;
-
-        return `
-          <article class="product-card">
-            <div class="product-media">
-              <span class="product-tag">${product.tag || product.cat}</span>
-
-              <img
-                class="product-image"
-                src="${imageUrl}"
-                alt="${product.name}"
-                loading="lazy"
-                data-main-image="${product.id}"
-                onerror="this.onerror=null;this.src='https://placehold.co/600x450/f4f4f4/222?text=Image+indisponible';"
-              >
-
-              ${hasGallery ? `
-                <div class="gallery-controls">
-                  <button
-                    type="button"
-                    class="gallery-button"
-                    data-gallery-prev="${product.id}"
-                    aria-label="Photo précédente"
-                  >‹</button>
-                  <button
-                    type="button"
-                    class="gallery-button"
-                    data-gallery-next="${product.id}"
-                    aria-label="Photo suivante"
-                  >›</button>
-                </div>
-                <div class="gallery-counter">${index + 1} / ${images.length}</div>
-              ` : ""}
-            </div>
-
-            ${hasGallery ? `
-              <div class="thumbnails" aria-label="Photos du produit">
-                ${images.map((image, photoIndex) => `
-                  <button
-                    type="button"
-                    class="thumbnail ${photoIndex === index ? "active" : ""}"
-                    data-gallery-photo="${product.id}"
-                    data-photo-index="${photoIndex}"
-                    aria-label="Afficher la photo ${photoIndex + 1}"
-                  >
-                    <img
-                      src="${image}"
-                      alt=""
-                      loading="lazy"
-                      onerror="this.style.opacity='0.25';"
-                    >
-                  </button>
-                `).join("")}
-              </div>
-            ` : ""}
-
-            <div class="product-info">
-              <div class="product-category">${product.cat}</div>
-              <h3>${product.name}</h3>
-              <p>${product.desc}</p>
-              <a
-                class="product-link"
-                href="${product.link}"
-                target="_blank"
-                rel="nofollow sponsored noopener noreferrer"
-              >Voir le produit →</a>
-            </div>
-          </article>
-        `;
-      }).join("");
-
-      attachGalleryEvents();
+          <div class="product-info">
+            <span class="tag">${escapeHTML(product.category)}</span>
+            <h3>${escapeHTML(product.name)}</h3>
+            <p>${escapeHTML(product.description)}</p>
+            <a class="product-link" href="${escapeHTML(productLink(product))}"
+               target="_blank" rel="nofollow sponsored noopener noreferrer">
+              Voir les produits sur Amazon →
+            </a>
+            <p class="purchase-note">L’achat et le paiement se font directement sur Amazon. Le prix et la disponibilité peuvent changer.</p>
+          </div>
+        </article>
+      `).join("");
     }
 
-    function changePhoto(productId, direction) {
-      const product = products.find(item => item.id === productId);
-      if (!product || !product.images || product.images.length < 2) return;
-
-      const currentIndex = galleryIndexes[productId] || 0;
-      galleryIndexes[productId] =
-        (currentIndex + direction + product.images.length) %
-        product.images.length;
-
-      renderProducts();
-    }
-
-    function attachGalleryEvents() {
-      productGrid.querySelectorAll("[data-gallery-prev]").forEach(button => {
-        button.addEventListener("click", () => {
-          changePhoto(button.dataset.galleryPrev, -1);
-        });
-      });
-
-      productGrid.querySelectorAll("[data-gallery-next]").forEach(button => {
-        button.addEventListener("click", () => {
-          changePhoto(button.dataset.galleryNext, 1);
-        });
-      });
-
-      productGrid.querySelectorAll("[data-gallery-photo]").forEach(button => {
-        button.addEventListener("click", () => {
-          const productId = button.dataset.galleryPhoto;
-          galleryIndexes[productId] = Number(button.dataset.photoIndex);
-          renderProducts();
-        });
-      });
-    }
-
-    searchInput.addEventListener("input", renderProducts);
-
+    document.getElementById("searchInput").addEventListener("input", renderProducts);
+    renderCategoryShortcuts();
     renderFilters();
     renderProducts();
   </script>
