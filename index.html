@@ -87,6 +87,28 @@
     .benefit strong { display: block; margin-bottom: 5px; }
     .benefit p { margin: 0; color: var(--muted); font-size: .92rem; }
     section { padding: 28px 0 42px; }
+    /* Séparation visuelle entre les catégories et les produits individuels */
+    #categories {
+      padding: 28px;
+      margin: 18px 0 34px;
+      border: 1px solid rgba(255, 159, 67, .28);
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255, 159, 67, .09), rgba(255, 255, 255, .015));
+    }
+    #produits {
+      padding: 28px;
+      margin: 18px 0 34px;
+      border: 1px solid rgba(63, 205, 190, .30);
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(63, 205, 190, .08), rgba(255, 255, 255, .015));
+    }
+    #categories .section-heading h2::before { content: "🗂️ "; }
+    #produits .section-heading h2::before { content: "🛍️ "; }
+    #categories .section-heading { border-left: 4px solid var(--orange); padding-left: 14px; }
+    #produits .section-heading { border-left: 4px solid #3fcdbE; padding-left: 14px; }
+    @media (max-width: 640px) {
+      #categories, #produits { padding: 16px; border-radius: 16px; }
+    }
     .section-heading { display: flex; justify-content: space-between; align-items: end; gap: 18px; flex-wrap: wrap; margin-bottom: 20px; }
     h2 { margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem); }
     .section-heading p { color: var(--muted); margin: 5px 0 0; }
